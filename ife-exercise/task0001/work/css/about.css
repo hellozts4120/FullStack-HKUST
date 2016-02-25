@@ -1,0 +1,126 @@
+.wrapper {
+	width: 980px;
+	height: 2300px;
+	margin: 0 auto;
+	background: #FFFFFF;
+	margin-top: 100px;
+}
+
+.wrapper div {
+	float: left;
+}
+
+.divide {
+	height: inherit;
+	width: 4px;
+	background: #EEEEEE
+}
+
+.left-page {
+	width: 488px;
+	height: inherit;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.right-page {
+	width: 488px;
+	height: inherit;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.icon {
+	width: 160px;
+	height: 160px;
+	position: absolute;
+	border-radius: 80px;
+	overflow: hidden;
+	margin: 0 auto;
+	top: -50px;
+	border: 6px solid #EEEEEE;
+	left: 404px
+}
+
+.icon img {
+	width: inherit;
+	height: inherit;
+}
+
+.title-text {
+	width: 408px;
+	padding-right: 50px;
+	text-align: right;
+	font-size: 20px;
+}
+
+.title-text:first-of-type {
+	padding-top: 120px;
+}
+
+.content-text {
+	width: 408px;
+	margin-right: 80px;
+	padding-left: 30px;
+	text-align: left;
+	font-size: 14px;
+}
+
+.content-text:first-of-type {
+	padding-top: 120px;
+}
+
+.content-text .exp{
+	margin: 50px;
+}
+
+.rect-block .year {
+	text-align: center;
+	border: 4px solid #EEEEEE;
+	position: relative;
+	font-size: 20px;
+	color: red;
+	background: #FFFFFF;
+	right: 135px;
+	width: 200px;
+	margin-bottom: 10px;
+	margin-top: 40px;
+}
+
+.rect-block .location {
+	font-size: 14px;
+	color: blue;
+	margin-bottom: 10px;
+}
+
+.rect-block .job-content {
+	font-size: 12px;
+}
+
+.blank-block{
+	width:408px;
+	height:475px;
+}
+
+.blank-block-1{
+	width:408px;
+	height:305px;
+}
+
+.small-icon {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	overflow: hidden;
+	margin: 0 auto;
+	top: -50px;
+	border: 6px solid #EEEEEE;
+	left: 434px;
+	margin-top: 360px;
+}
+
+.small-icon img {
+	width: inherit;
+	height: inherit;
+}
