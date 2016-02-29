@@ -59,7 +59,7 @@
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a data-toggle="modal" data-target="#loginModal">
+                    <li><a id="login-button">
                     <span class="glyphicon glyphicon-log-in"></span> Login</a>
                     </li>
                 </ul>
@@ -83,27 +83,27 @@
                         <label for="radios" class="col-xs-12 col-sm-2 control-label">Number of Guests</label>
                         <div id="radios" class="col-xs-12 col-sm-10">
                             <label class="radio-inline">
-                                <input type="radio" id="radio-box1" value="option1"> 1
+                                <input type="radio" name="radio-option" id="radio-box1" value="option1"> 1
                             </label>
                             
                             <label class="radio-inline">
-                                <input type="radio" id="radio-box2" value="option2"> 2
+                                <input type="radio" name="radio-option" id="radio-box2" value="option2"> 2
                             </label>
                             
                             <label class="radio-inline">
-                                <input type="radio" id="radio-box3" value="option3"> 3
+                                <input type="radio" name="radio-option" id="radio-box3" value="option3"> 3
                             </label>
                             
                             <label class="radio-inline">
-                                <input type="radio" id="radio-box4" value="option4"> 4
+                                <input type="radio" name="radio-option" id="radio-box4" value="option4"> 4
                             </label>
                             
                             <label class="radio-inline">
-                                <input type="radio" id="radio-box5" value="option5"> 5
+                                <input type="radio" name="radio-option" id="radio-box5" value="option5"> 5
                             </label>
                             
                             <label class="radio-inline">
-                                <input type="radio" id="radio-box6" value="option6"> 6
+                                <input type="radio" name="radio-option" id="radio-box6" value="option6"> 6
                             </label>
                         </div>    
                     </div>
@@ -212,8 +212,8 @@
                     <p style="padding:40px;"></p>
                     <a type="button" class="btn btn-warning btn-block"
                      title="Or Call us at +852 12345678"
-                     data-placement="bottom" href="#reserve-form" 
-                     data-toggle="modal" data-target="#reserveModal">Reserve Table</a>
+                     href="#reserve-form" 
+                     id="reserve-button">Reserve Table</a>
                 </div>
             </div>
         </div>
@@ -273,6 +273,16 @@
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+                
+                <div class="btn-group" id="carouselButtons">
+                    <button class="btn btn-danger btn-xs" id="carousel-pause">
+                        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                    </button>
+
+                    <button class="btn btn-danger btn-xs" id="carousel-play">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>    
+                </div>
                 </div>
             </div>
         </div>
@@ -399,7 +409,22 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
+            $("#mycarousel").carousel({interval: 2000});
+            $("#carousel-pause").click(function(){
+                $("#mycarousel").carousel('pause');
+            });
+            
+            $("#carousel-play").click(function(){
+                $("#mycarousel").carousel('cycle');
+            });
+            
+            $("#reserve-button").click(function(){
+                $("#reserveModal").modal('show');
+            });
+            
+            $("#login-button").click(function(){
+                $("#loginModal").modal('show');
+            });
          });
     </script>
 </body>
