@@ -153,6 +153,53 @@ function getPosition(element) {
 }
 
 
+// 得到真正的Array
+function toArray(root) {
+    var arr = [];
+    for (var cur = 0; cur < root.length; cur++) {
+        arr.push(root[cur]);
+    }
+    return arr;
+}
+
+// 在数组中查找指定元素
+function searchNodeInArray(result, element) {
+    for (var cur = 0; cur < result.length; cur++) {
+        if (result[cur] == element) return true;
+    }
+    return false;
+}
+
+// 查找指定element的父节点中是否存在满足查询条件的DOM结点
+function searchParents(element, selector) {
+    var searchResult = $(selector);
+    var tempNode = element;
+    if (!isArray(searchResult)) {
+        var temp = [searchResult];
+        searchResult = temp;
+    }
+    while(tempNode.parentNode) {
+        if (searchNodeInArray(searchResult, tempNode)) {
+            return true;
+        }
+        else {
+            tempNode = tempNode.parentNode;
+        }
+    }
+    return false;
+}
+
+// 对含DOM结点的集合root进行过滤
+function fliterParent(root, selector) {
+    var arr = toArray(root);
+    for (var cur = 0; cur < arr.length; cur++) {
+        if (!searchParents(arr[cur], selector)) {
+            arr.splice(cur, 1);
+            cur--;
+        }
+    }
+    return arr;
+}
 
 // 实现一个简单的Query
 function $(selector) {
@@ -168,7 +215,18 @@ function $(selector) {
     
     //复合查找
     if (selectActions.length > 1) {    
+        var root = $(selectActions[selectActions.length - 1]);
+        if (root.length == 0) {
+            return null;
+        }
         
+        if (!isArray(root)) {
+            root = toArray(root);
+        }
+        for (var cur = 2; cur <= selectActions.length; cur++) {
+            root = fliterParent(root, selectActions[selectActions.length - cur]);
+        }
+        return root;
     }
     
     //通过id查找
@@ -198,8 +256,31 @@ function $(selector) {
         }
     }
     
+    //通过属性查找
     if (attrRegex.test(selector)) {
-        
+        var result = [];
+        var allNodes = document.getElementsByTagName("*");
+        var matchResult = selector.match(attrRegex);
+        var tag = matchResult[1]; 
+        var key = matchResult[2];
+        var value = matchResult[4];
+        for (var cur = 0; cur < allNodes.length; cur++) {
+            if (value) {
+                var temp = allNodes[cur].getAttribute(key);
+                if (temp === value) {
+                    result.push(allNodes[cur]);
+                }
+                else {
+                    continue;
+                }
+            }
+            else {
+                if (allNodes[cur].hasAttribute(key)) {
+                    result.push(allNodes[cur]);
+                }
+            }
+        }
+        return result;
     }
 }
 
