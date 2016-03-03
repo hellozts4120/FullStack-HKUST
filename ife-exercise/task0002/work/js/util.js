@@ -286,8 +286,155 @@ function $(selector) {
 
 /*    Part4    */
 
+// 给一个element绑定一个针对event事件的响应，响应函数为listener
+function addEvent(element, event, listener) {
+    if (element.addEventListener) {
+        element.addEventListener(event, listener, false);
+    }
+    else if (element.attachEvent) {
+        element.attachEvent("on" + event, listener);
+    }
+    else {
+        element["on" + event] = listener;
+    }
+}
 
+// 移除element对象对于event事件发生时执行listener的响应
+function removeEvent(element, event, listener) {
+    if (element.removeEventListener) {
+        element.removeEventListener(event, listener, false);
+    }
+    else if (element.detachEvent) {
+        element.detachEvent("on" + event, listener);
+    }
+    else {
+        element["on" + event] = null;
+    }
+}
+
+// 实现对click事件的绑定
+function addClickEvent(element, listener) {
+    addEvent(element, 'click', listener);
+}
+
+// 实现对于按Enter键时的事件绑定
+function addEnterEvent(element, listener) {
+    if (element.addEventListener) {
+        element.addEventListener("keydown", function(e) {
+            e = e || window.event;
+            if ((e.keyCode || e.which) == 13) {
+                listener();
+            }
+        }, false);
+    }
+    else {
+        element.attachEvent("onkeydown", function(e) {
+            e = e || window.event;
+            if ((e.keyCode || e.which) == 13) {
+                listener();
+            }
+        })
+    }
+}
+
+$.on = addEvent;
+$.un = removeEvent;
+$.click = addClickEvent;
+$.enter = addEnterEvent;
+
+// 先简单一些， 使用事件代理绑定
+// have some bug here!!!
+function delegateEvent(element, tag, eventName, listener) {
+    //var ele = $(element);
+    addEvent(element, eventName, function(e) {
+        e = arguments[0] || window.event;
+        var target = e.srcElement ? e.srcElement : e.target;
+        if (target.tagName.toLowerCase() === tag) {
+            listener();
+        }
+    });
+}
+
+$.delegate = delegateEvent;
 
 /*    Part5    */
 
+// 判断是否为IE浏览器，返回-1或者版本号
+function isIE() {
+    var agent = navigator.userAgent;
+    if ((/msie (\d+\.\d+)/.test(agent)) || (/MSIE (\d+\.\d+)/.test(agent))) {
+        return (document.documentMode || RegExp["$1"]);
+    }
+    else {
+        return false;
+    }
+}
+
+// 设置cookie
+function setCookie(cookieName, cookieValue, expiredays) {
+    var expireTime;
+    if (expiredays != null) {
+        expireTime = new Date();
+        expireTime.setTime(expireTime.getTime() + expiredays * 24 * 60 * 60 * 1000);
+    }
+    document.cookie = cookieName + "=" + cookieValue + ((expiredays == null) ? "" : ";expires="+expireTime.toUTCString());
+}
+
+// 获取cookie值
+function getCookie(cookieName) {
+    var cookie = document.cookie.split(";");
+    var value;
+    each(cookie, function(item, index) {
+        if (trim(item.split("=")[0]) == cookieName) {
+            value = trim(item.split("=")[1]);
+        }
+    });
+    return value;
+}
+
+/*    Part6    */
+
+// Ajax
+function ajax(url, options) {
+    if (window.XMLHttpRequest) {
+        var xhr = new XMLHttpRequest();
+    }
+    else {
+        var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    var type = (options.type || 'GET').toUpperCase();
+    var data = (options.data || "");
+    var onsuccess = (options.onsuccess || "");
+    var onfail = (options.fail || "");
+    
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200 && onsuccess != "") {
+            onsuccess(xhr.responseText, xhr);
+        }
+        
+        if (xhr.status == 404 && onfail != "") {
+            onfail(xhr.responseText, xhr);
+        }
+        
+    }
+    
+    if (data != "") {
+        url = url + "?";
+        for (var cur in data) {
+            url = url + cur + "=" + data[cur] + "&";
+        }
+    }
+    
+    if (type == "POST") {
+        console.log('post');
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhr.send(data);
+    }
+    else {
+        console.log('get');
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
+}
 
