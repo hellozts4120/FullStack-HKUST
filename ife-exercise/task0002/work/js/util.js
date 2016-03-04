@@ -64,7 +64,7 @@ function uniqArray(arr) {
             targetArray.push(thisArray[cur]);
         }
     }
-    if (thisArray[thisArray.length - 1] != thisArray[thisArray.length - 2]) {
+    if (targetArray.indexOf(thisArray[thisArray.length - 1]) == -1) {
         targetArray.push(thisArray[thisArray.length - 1]);
     }
     return targetArray;

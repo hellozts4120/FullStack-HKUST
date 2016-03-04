@@ -1,0 +1,36 @@
+.box {
+    width: 200px;
+    height: 800px;
+    border: 1px solid #000000;
+    float: left;
+    z-index: 1;
+}
+
+.box .bar {
+    width: 198px;
+    height: 100px;
+    background: red;
+    border: 1px solid #000000;
+    position: absolute;
+    z-index: 3;
+}
+
+#box-right, #box-left {
+    margin-left: 100px;
+}
+
+#bar2, #bar7 {
+    top: 102px;
+}
+
+#bar3, #bar8 {
+    top: 204px;
+}
+
+#bar4 {
+    top: 306px;
+}
+
+#bar5 {
+    top: 408px;
+}
