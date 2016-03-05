@@ -1,3 +1,5 @@
+/*   Part5    */
+
 .box {
     width: 200px;
     height: 800px;
@@ -33,4 +35,54 @@
 
 #bar5 {
     top: 408px;
+}
+
+/*    Part3    */
+
+#slider {
+    width: 1280px;
+    height: 600px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+#slider ul {
+    z-index: 2;
+}
+
+#slider li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    list-style: none;
+    z-index: 0;
+}
+
+#slider img {
+    width: 1280px;
+    height: 600px;
+    background-size: cover
+}
+
+#num {
+    width: 142px;
+    position: absolute;
+    bottom: 20px;
+    left:50%;
+    margin-left: -70px;
+    z-index: 99999999999999999999999;
+}
+
+#num span {
+    border: 1px solid red;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.active{
+    background: red;
 }
