@@ -4,13 +4,26 @@
         choice = -1;
         $("#suggest").innerHTML = "";
         var str = $("#search").value;
-        ajax('xxxxx', {
+        ajax('http://localhost:6666', {
             type: "GET",
             data: {
-                name = str;
+                name: str
             },
             onsuccess: function(responseText, xhr) {
-                //need to implement
+                var suggest_template = "<div class=\"suggest\" id=\"{{id}}\">{{suggest}}</div>";
+                var arr = responseText.split(",");
+                console.log(arr);
+                arr.length = arr.length - 1;
+                each(arr,function(item,index){
+                    $("#suggestbox").innerHTML = $("#suggestbox").innerHTML + suggest_template.replace(/{{suggest}}/g,item).replace(/{{id}}/g,index);
+                })
+                for(var i = 0 ; i < $(".suggest").length ; i++){
+                    addEvent($(".suggest")[i],"click",function(){
+                    $("#search").value = this.innerHTML;
+                    $("#suggestbox").innerHTML = "";
+                    nowChoice = -1;
+                    })
+                }
             }
         })
     }
@@ -35,10 +48,10 @@
         ajax: suggestAjax,
         up: chooseUp,
         down: chooseDown,
-        choose: choose;
+        choose: choose
     }
     window.suggest = suggest;
-})()£»
+})();
 
 addEvent($("#search"), 'keyup', function() {
     e = event || window.event;

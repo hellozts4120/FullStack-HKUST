@@ -434,7 +434,7 @@ function ajax(url, options) {
     else {
         console.log('get');
         xhr.open("GET", url, true);
-        xhr.send();
+        //xhr.send();
     }
 }
 
