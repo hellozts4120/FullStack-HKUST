@@ -59,11 +59,16 @@
 	margin-left: 193px;
 }
 
+.content-head table {
+    height: 100%;
+}
+
 .block {
 	display: table-cell;
 	background: #FFFFFF;
 	line-height: 170%;
 	width: 320px;
+    height: 100%;
 	margin-right: 10px;
 	float: left;
 	position: relative;
@@ -125,4 +130,15 @@
 	margin: 0 auto;
 	font-size: 14px;
 	min-height: 250px;
+}
+
+@media only screen and (max-width: 980px) {
+    .main-content {
+        width: 980px;
+    }
+    
+    .content-head {
+        width: 980px;
+        margin : 0 auto;
+    }
 }
