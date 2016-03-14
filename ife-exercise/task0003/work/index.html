@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-ch">
+    <head>
+        <title>To-Do</title>
+        <meta charset="utf-8">
+		<meta http-equiv="Content-Type" charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
+        
+        <link rel="stylesheet" media="all" type="text/css" href="css/reset.css">
+        <link rel="stylesheet" media="all" type="text/css" href="css/main.css">
+    </head>
+
+    <body>
+        
+        <div id="header">&nbsp;&nbsp;&nbsp;&nbsp;GTD Tools</div>
+        
+        <div id="category">
+            <!-- total><-->
+            <div id="cata-all">所有任务（）</div>
+            <div id="cata-title">分类列表</div>
+            <div id="cata-list"></div>
+            <div id="cata-footer">
+                <div id="add-cata" class="add-button">新增分类</div>
+            </div>
+        </div>
+
+        <div id="task">
+            <div id="task-header">
+                <div class="task-header-button">所有</div>
+                <div class="task-header-button">未完成</div>
+                <div class="task-header-button">已完成</div>
+            </div>    
+            
+            <div id="task-content"></div>
+            <div id="task-footer">
+                <div id="add-task" class="add-button">新增任务</div>
+            </div>
+        </div>
+        
+        <div id="content">
+            <div id="content-header"></div>
+            <div id="content-date"></div>
+            <div id="content-body"></div>
+        </div>
+        
+        <script type="text/javascript" src="js/util.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+    </body>    
+</html>    
