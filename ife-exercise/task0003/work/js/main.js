@@ -4,6 +4,7 @@ localStorage.clear();
     var _List1, _List2, _List3;
     var taskCount = 0;
     var _List1Title, _List2Title, _List3Content, _ListRelation;
+    var pattern = document.getElementsByTagName("body")[0];
     
     //增加父级分类
     function addList1(name) {
@@ -40,7 +41,7 @@ localStorage.clear();
             num: _List2,
             title: name
         };
-        localStorage.List1Title = JSON.stringify(_List2Title);
+        localStorage.List2Title = JSON.stringify(_List2Title);
         _ListRelation[parentList]["task"][_List2] = {
             num: _List2,
             childTask: {},
@@ -48,7 +49,7 @@ localStorage.clear();
         }
         localStorage.ListRelation = JSON.stringify(_ListRelation);
         _List2++;
-        localStorage.List2++;       
+        localStorage.List2++;    
         init();        
     }
     
@@ -92,10 +93,20 @@ localStorage.clear();
         else return -1;
     }
     
+    function getChildTask(id) {
+        var childArray = [];
+        var cataId = id.split("-")[1];
+        var taskId = id.split("-")[2];
+        for (item in _ListRelation[cataId]["task"][taskId]["childTask"]) {
+            childArray.push(item);
+        }
+        return childArray;
+    }
+    
     function initCategory() {
         $("#cata-list").innerHTML = "";
-        var template1 = "<div class=\"cata-item\" id=\"cata-item-{{id}}\">{{name}}</div><div class=\"cata-tasklist\" id=\"cata-item-{{id}}-tasklist\"></div>";
-        var template2 = "<div class=\"cata-task\" id=\"task-{{parentID}}-{{taskID}}\">{{content}}({{childtaskNum}})</div>";
+        var template1 = "<div class=\"cata-item\" id=\"cata-item-{{id}}\"><img src=\"img/tasklist.png\">{{name}}<div class=\"cata-delete\"><img src=\"img/delete.png\"></div></div><div class=\"cata-tasklist\" id=\"cata-item-{{id}}-tasklist\"></div>";
+        var template2 = "<div class=\"cata-task\" id=\"task-{{parentID}}-{{taskID}}\"><img src=\"img/childtask.png\">{{content}}({{childtaskNum}})<div class=\"cata-delete\"><img src=\"img/delete.png\"></div></div>";
         for (var listItem in _List1Title) {
             $("#cata-list").innerHTML += template1.replace(/{{name}}/g, _List1Title[listItem]["title"]).replace(/{{id}}/g, listItem);
             for (var taskItem in _ListRelation[listItem]["task"]) {
@@ -104,9 +115,8 @@ localStorage.clear();
                     childCount++;
                     taskCount++;
                 }
-                $("#cata-item-" + item + "-tasklist").innerHTML += template2.replace(/{{parentID}}/g, listItem).replace(/{{taskID}}/g, taskItem).replace(/{{content}}/g, _List2Title[taskItem]["title"]).replace(/{{childtaskNum}}/g, childCount);
+                $("#cata-item-" + listItem + "-tasklist").innerHTML += template2.replace(/{{parentID}}/g, listItem).replace(/{{taskID}}/g, taskItem).replace(/{{content}}/g, _List2Title[taskItem]["title"]).replace(/{{childtaskNum}}/g, childCount);
             }
-            console.log($("#category-item-" + listItem));
             $("#cata-all").innerHTML = "所有任务（" + taskCount + "）";
         }
     }
@@ -148,7 +158,7 @@ localStorage.clear();
             _List1Title = {};
             localStorage.List1Title = "";
         }
-        
+
         if (localStorage.getItem("List2Title")) {
             if (localStorage.List2Title) {
                 _List2Title = JSON.parse(localStorage.List2Title);
@@ -185,12 +195,143 @@ localStorage.clear();
         //初次使用，添加“默认分类”
         if (_List1Title[1] == undefined) {
             addList1("默认分类");
+            addList2("默认子分类","1");
         }
-        
-        console.log(_List1Title[1]["title"]);
         
         //初始化最左栏category
         initCategory();
+        
+        //处理事件
+        delegateEvent();
+    }
+    
+    function delegateEvent() {
+        
+        addEvent(pattern, "click", function(e) {
+            e = e || window.event;
+            var tagChild = e.srcElement || e.target;
+            var dateTemplate = "<div id=\"childtask-{{date}}\"><div class=\"childtask-date\">{{date}}</div></div>";
+            var taskTemplate = "<div class=\"childtask\" id=\"{{ID3}}\">{{title}}</div>";
+            if (tagChild.nodeType == 1 && (tagChild.getAttribute("class") == "cata-item" || tagChild.getAttribute("class") == "cata-item cata-item-clicked")) {
+                if(tagChild.nextSibling.getAttribute("class") != "cata-tasklist"){
+                    tagChild.nextSibling.setAttribute("class", "cata-tasklist");
+                    return;
+                }
+                if($(".cata-item-clicked")[0] != undefined){
+                    $(".cata-item-clicked")[0].setAttribute("class", "cata-item");
+                }
+                addClass(tagChild, "cata-item-clicked");
+                addClass($("#" + tagChild.id + "-tasklist"), "cata-tasklist-clicked");
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.parentNode.id == "add-cata") {
+                $("#prompt").setAttribute("style", "display:block;");
+                $("#prompt").setAttribute("class", "cata-input");
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.id == "prompt-yes") {
+                if ($("#prompt").getAttribute("class") == "cata-input" && $("#prompt-input").value) {
+                    alert("添加分类成功！");
+                    addList1($("#prompt-input").value);
+                }
+                else {
+                    alert("输入有误，添加失败！")
+                }
+                $("#prompt").removeAttribute("style");
+                $("#prompt").removeAttribute("class");
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.id == "prompt-cancel") {
+                $("#prompt").removeAttribute("style");
+                $("#prompt").removeAttribute("class");
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.getAttribute("class") == "cata-task"){
+                var taskArray = getChildTask(tagChild.id).sort(sortToDoByDate);;
+                var dateArray = [];
+                for (var i = 0; i < taskArray.length; i++) {
+                    if (dateArray.indexOf(_List3Content[taskArray[i]]).time == -1) {
+                        dateArray.push(_List3Content[taskArray[i]].time);
+                    }
+                }
+                $("#task-content").innerHTML = "";
+                for (var i = 0; i < dateArray.length; i++) {
+                    $("#task-content").innerHTML += dateTemplate.replace(/{{date}}/g, dateArray[i]);
+                }
+                for (var i = 0; i < taskArray.length; i++) {
+                    $("#childtask-" + _List3Content[taskArray[i]].time).innerHTML += taskTemplate.replace(/{{ID3}}/g, "childtask-" + taskArray[i]).replace(/{{title}}/g, _List3Content[taskArray[i]]["title"]);
+                }
+                
+                if ($(".cata-task-clicked").length) {
+                    $(".cata-task-clicked")[0].setAttribute("class", "cata-task");
+                }
+                addClass(tagChild, "cata-task-clicked");
+                if ($(".cata-item-clicked")[0] != undefined) {
+                    $(".cata-item-clicked")[0].setAttribute("class", "cata-item");
+                }
+                addClass(tagChild.parentNode.previousSibling,"cata-item-clicked");
+                $('#task-header-all').click();
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.parentNode.id == "add-task") {
+                if($(".cata-item-clicked")[0] != undefined){
+                    if($(".cata-item-clicked")[0].id == "cata-item-1"){
+                        alert("不能为默认分类添加子分类！");
+                        return;
+                    }
+                    else {
+                        alert("输入有误，添加失败！")
+                    }
+                    $("#prompt2").setAttribute("style", "display:block;");
+                    $("#prompt2").setAttribute("class", "cata-input");
+				}
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.id == "prompt2-yes") {
+                if ($("#prompt2").getAttribute("class") == "cata-input" && $("#prompt2-input").value) {
+                    alert("添加子分类成功！");
+                    addList2($("#prompt2-input").value, $(".cata-item-clicked")[0].id.split("-")[2]);
+                }
+                $("#prompt2").removeAttribute("style");
+                $("#prompt2").removeAttribute("class");
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.id == "prompt2-cancel") {
+                $("#prompt2").removeAttribute("style");
+                $("#prompt2").removeAttribute("class");
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.id == "add-childtask") {
+                
+            }
+            
+            //debug here...
+            if (tagChild.nodeType == 1 && tagChild.parentNode.getAttribute("class") == "cata-delete") {
+                var ID1 = tagChild.parentNode.parentNode.id.split('-')[1];
+                var ID2 = tagChild.parentNode.parentNode.id.split('-')[2];
+                console.log(ID1);
+                if (ID1 == 1) {
+                    alert("不能删除默认分类！");
+                    return;
+
+                }
+                if (ID2 == 1) {
+                    alert("不能删除默认子分类！");
+                    return;
+                }
+                if (confirm("确认删除此分类吗？")) {
+                    tagChild.parentNode.style.display = "none";
+                    delete _ListRelation[ID1]["task"][ID2];
+                    delete _List2Title[ID2];
+                    localStorage.ListRelation = JSON.stringify(_ListRelation);
+                    localStorage.List2Title = JSON.stringify(_List2Title);
+                }
+            }
+        });
+        
+        addEvent(pattern, "keyup", function(e) {
+            console.log(e.path[0].id);
+        });
     }
     
     window.init = init;

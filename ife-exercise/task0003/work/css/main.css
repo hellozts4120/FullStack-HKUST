@@ -3,6 +3,10 @@ html, body {
     height: 100%;
 }
 
+body *{
+    transition: all 0.4s;
+}
+
 #header {
     width: 100%;
     height: auto;
@@ -14,10 +18,11 @@ html, body {
     z-index: 200;
     font-family: "Microsoft YaHei";
     font-size: 20px;
+    box-sizing: border-box;
 }
 
 #category {
-    width: 200px;
+    width: 250px;
     height: 100%;
     background: #DCDCDC;
     position: relative;
@@ -25,12 +30,17 @@ html, body {
     z-index: 100;
     border: 1px solid #A9A9A9;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
-#category .cata-item, #cata-all, #cata-all div {
+.cata-item, #cata-all, #cata-all div {
     position: relative;
     width: 100%;
     height: 40px;
+}
+
+.cata-item {
+    margin-bottom: 5px;
 }
 
 .cata-item, .cata-task{
@@ -44,11 +54,14 @@ html, body {
 }
 
 .cata-task{
-    height: 50px;
+    width: 100%;
+    height: 30px;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 0 30px;
+    margin-left: 10px;
     position: relative;
 }
+
 .cata-task-clicked{
     background: #ffffff;
 }
@@ -66,9 +79,20 @@ html, body {
 #cata-list{
     height: 100%;
     padding-bottom: 50px;
-    padding-top: 80px;
+    padding-top: 140px;
     box-sizing: border-box;
     overflow: auto;
+}
+
+.cata-delete {
+    width: auto;
+    float: right;
+    margin-top: 2px;
+    display: none;
+}
+
+.cata-task:hover .cata-delete , .cata-item:hover .cata-delete{
+	display: inline;
 }
 
 #cata-footer{
@@ -80,14 +104,54 @@ html, body {
     border-top: 1px solid rgb(206,206,206);
 }
 
+.cata-tasklist{
+    width: 100%;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.cata-tasklist-clicked{
+    height: auto;
+}
+
+.cata-item-clicked{
+    background: #aaaaaa;
+}
+
+.childtask{
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.childtask:hover{
+    color: green;
+}
+
+.childtask-clicked{
+	color: green;
+	background: #eeeeee;
+}
+
+.childtask-date{
+    background: rgb(243,243,216);
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
 #task {
-    width: 200px;
+    width: 203px;
     height: 100%;
     float: left;
     position: relative;
     z-index: 100;
     border: 1px solid #A9A9A9;
     background: #FFFFFF;    
+    box-sizing: border-box;
 }
 
 #task-header {
@@ -123,6 +187,7 @@ html, body {
     padding-top: 80px;
     box-sizing:border-box;
     overflow: auto;
+    border: 1px solid #A9A9A9;
 }
 
 #task-footer {
@@ -136,7 +201,7 @@ html, body {
 #content {
     box-sizing: border-box;
     padding-top: 60px;
-    margin-left: 404px;
+    margin-left: 454px;
     height: 100%;
     position: relative;
     z-index: 100;
@@ -177,17 +242,106 @@ html, body {
 }
 
 .add-button {
-    width: auto;
+    width: 100px;
+    height: 24px;
     cursor: pointer;
     border-radius: 5px;
+    font-family: "Microsoft YaHei";
+}
+
+.add-button p {
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#add-cata, #add-task {
+    width: 110px;
+    margin: 0;
+    float: left;
+    margin: 5px;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+#add-cata p {
+    margin-right: 10px;
+}
+
+#add-childtask {
     margin: 15px;
     margin-right: 110px;
-    font-family: "Microsoft YaHei";
+    margin-bottom: 0;
 }
 
 .add-button:hover {
     background: #aaaaaa;
 }
+
+#prompt, #prompt2{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    background: rgba(0,0,0,0.5);
+    display: none;
+}
+#prompt-window, #prompt2-window{
+    margin-top: 300px !important;
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+    background: #eeeeee;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#prompt-header, #prompt2-header{
+    width: 100%;
+    height: 50px;
+    position: relative;
+    text-align: center;
+}
+#prompt-cancel, #prompt2-cancel, #prompt-yes, #prompt2-yes{
+    position: absolute;
+    top: 15px;
+    font-size: 20px;
+    font-family: "Microsoft YaHei";
+    cursor: pointer;
+    color: #079243;
+}
+#prompt-cancel:hover, #prompt-yes:hover, #prompt2-cancel:hover, #prompt2-yes:hover{
+    color: #39c878;
+}
+#prompt-cancel, #prompt2-cancel{
+    left: 20px;
+}
+#prompt-yes, #prompt2-yes{
+    right: 20px;
+}
+#prompt-title, #prompt2-title{
+    padding-top: 10px;
+    font-size: 25px;
+    font-family: "微软雅黑";
+}
+#prompt-body, #prompt2-body{
+    background: #cccccc;
+    height: 100%;
+}
+
+#prompt-body p, #prompt2-body p{
+    font-size: 15px;
+    padding-top: 30px;
+    padding-left: 10px;
+    color: #666666;
+}
+
+#prompt-input, #prompt2-input{
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    padding-left: 10px
+}
+
 
 /*  responsive design  */
 
