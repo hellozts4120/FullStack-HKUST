@@ -14,12 +14,12 @@ localStorage.clear();
             }
         }
         _List1Title[_List1] = {
-            num: _List1,
+            id: _List1,
             title: name
         };
         localStorage.List1Title = JSON.stringify(_List1Title);
         _ListRelation[_List1] = {
-            num: _List1,
+            id: _List1,
             task: {}
         }
         localStorage.ListRelation = JSON.stringify(_ListRelation);
@@ -38,12 +38,12 @@ localStorage.clear();
             }
         }
         _List2Title[_List2] = {
-            num: _List2,
+            id: _List2,
             title: name
         };
         localStorage.List2Title = JSON.stringify(_List2Title);
         _ListRelation[parentList]["task"][_List2] = {
-            num: _List2,
+            id: _List2,
             childTask: {},
             parentID: parentList
         }
@@ -61,14 +61,14 @@ localStorage.clear();
             }
         }
         _List3Content[_List3] = {
-            num: _List3,
+            id: _List3,
             title: name,
             time: date,
             content: content
         };
         localStorage.List3Content = JSON.stringify(_List3Content);
         _ListRelation[grandParent]["task"][parent]["childTask"][_List3] = {
-            num: _List3,
+            id: _List3,
             grandParentID: grandParent,
             parentID: parent
         }
@@ -79,8 +79,8 @@ localStorage.clear();
     }
     
     function sortToDoByDate(todo1, todo2) {
-        var date1 = _List3Content[todo1]["date"].split("-");
-        var date2 = _List3Content[todo2]["date"].split("-");
+        var date1 = _List3Content[todo1]["time"].split("-");
+        var date2 = _List3Content[todo2]["time"].split("-");
         if (date1[0] > date2[0]) {
             return 1;
         }
@@ -207,7 +207,7 @@ localStorage.clear();
     
     function delegateEvent() {
         
-        addEvent(pattern, "click", function(e) {
+        pattern.onclick = function(e) {
             e = e || window.event;
             var tagChild = e.srcElement || e.target;
             var dateTemplate = "<div id=\"childtask-{{date}}\"><div class=\"childtask-date\">{{date}}</div></div>";
@@ -250,7 +250,7 @@ localStorage.clear();
                 var taskArray = getChildTask(tagChild.id).sort(sortToDoByDate);;
                 var dateArray = [];
                 for (var i = 0; i < taskArray.length; i++) {
-                    if (dateArray.indexOf(_List3Content[taskArray[i]]).time == -1) {
+                    if (dateArray.indexOf(_List3Content[taskArray[i]].time) == -1) {
                         dateArray.push(_List3Content[taskArray[i]].time);
                     }
                 }
@@ -271,6 +271,40 @@ localStorage.clear();
                 }
                 addClass(tagChild.parentNode.previousSibling,"cata-item-clicked");
                 $('#task-header-all').click();
+            }
+            
+            //need debug here...
+            if(tagChild.nodeType == 1 && tagChild.id == "task-header-all") {
+                console.log($(".cata-task-clicked")[0]);
+                if($(".task-header-clicked").length){
+                    $(".task-header-clicked")[0].setAttribute("class","task-header-button");
+                }
+                addClass(tagChild, "task-header-clicked");
+                var taskArray = getChildTask($(".cata-task-clicked")[0].id).sort(sortToDoByDate);
+                var dateArray = [];
+                
+                for (var i = 0; i < taskArray.length; i++) {
+                    if (dateArray.indexOf(_List3Content[taskArray[i]["time"]]) == -1) {
+                        dateArray.push(_List3Content[taskArray[i]].time);
+                    }
+                }
+                
+                $("#task-content").innerHTML = "";
+                for (var i = 0; i < dateArray.length; i++) {
+                    $("#task-content").innerHTML += dateTemplate.replace(/{{date}}/g, dateArray[i]);
+                }
+                for (var i = 0; i < taskArray.length; i++) {
+                    $("#childtask-" + _List3Content[taskArray[i]].time).innerHTML += taskTemplate.replace(/{{ID3}}/g, "childtask-" + taskArray[i]).replace(/{{title}}/g, _List3Content[taskArray[i]]["title"]);
+                }
+                
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.id=="task-header-done") {
+                
+            }
+            
+            if(tagChild.nodeType == 1 && tagChild.id=="task-header-undone") {
+                
             }
             
             if(tagChild.nodeType == 1 && tagChild.parentNode.id == "add-task") {
@@ -301,15 +335,104 @@ localStorage.clear();
                 $("#prompt2").removeAttribute("class");
             }
             
-            if(tagChild.nodeType == 1 && tagChild.id == "add-childtask") {
+            if(tagChild.nodeType == 1 && (tagChild.id == "add-childtask" || tagChild.parentNode.id == "add-childtask")) {
+                $("#content-header").innerHTML = "";
+                $("#content-date").innerHTML = "";
+                $("#content-body").innerHTML = "";
+                var curItem = $(".cata-task-clicked")[0];
+                if (curItem == undefined) return;
+                var grandpa = curItem.id.split("-")[1];
+                var parent = curItem.id.split("-")[2];
+                addList3("New Task", "", "", parent, grandpa);
+                $("#task-" + grandpa + "-" + parent).click();
+                $("#childtask-" + (_List3 - 1)).click();
+                $("#taskEdit").click();
+                init();
+            }
+            
+            if (tagChild.nodeType == 1 && tagChild.getAttribute("class") == "childtask") {
+                var id = tagChild.id.split("-")[1];
+                $("#content-header").innerHTML = _List3Content[id]["title"];
+                $("#content-date").innerHTML = _List3Content[id]["time"];
+                $("#content-body").innerHTML = _List3Content[id]["content"];
+                if (_List3Content[id].status != undefined && _List3Content[id].status == "completed") {
+                    $("#taskComplete").setAttribute("style", "display:block;");
+                    $("#taskSave").setAttribute("style", "display:none;");
+                }
+                else {
+                    $("#taskComplete").setAttribute("style", "display:none;");
+                    $("#taskSave").setAttribute("style", "display:block;");
+                }
                 
+                if($(".childtask-clicked").length){
+                    $(".childtask-clicked")[0].setAttribute('class','childtask');
+                }
+                addClass(tagChild, "childtask-clicked");
+            }
+            
+            if((tagChild.id == "taskEdit" || tagChild.parentNode.id == "taskEdit") && $(".childtask-clicked").length) {
+                if($("#childtask-title") == undefined) {
+                    $("#taskSave").setAttribute("style", "display:block;");
+                    $("#taskComplete").setAttribute("style", "display:none;");
+                    var curTitle = $("#content-header").innerHTML;
+                    var cutDate = $("#content-date").innerHTML;
+                    $("#content-header").innerHTML = "<input class=\"content-header-input\" id=\"childtask-title\"><p id=\"childtask-title-count\">还可输入12个字</p>";
+                    $("#content-date").innerHTML = "<input class=\"content-header-input\" id=\"childtask-time\"><p id=\"childtask-time-alert\">请使用yyyy-mm-dd格式</p>";
+                    $("#childtask-title").value = curTitle;
+                    $("#childtask-time").value = curDate;
+                    $("#content-body").contentEditable = true;
+                    
+                    $("#content-body-count").style.display = "block";
+                    $("#childtask-title-count").innerHTML = "还可输入" + (20-$("#childtask-title").value.length) + "个字";
+                }
+            }
+                        
+            if((tagChild.id == "taskSave" || tagChild.parentNode.id == "taskSave") && $(".childtask-clicked").length) {
+                var time = $("#childtask-time").value;
+                if (!/^\d\d\d\d-\d\d-\d\d$/.test(time)) {
+                    alert("时间输入格式错误！请使用yyyy-mm-dd格式");
+                    return;
+                }
+                
+                if (parseInt(time.split("-")[1]) > 12 || parseInt(time.split("-")[1]) < 1 || parseInt(time.split("-")[2]) > 31 || parseInt(time.split("-")[2]) < 1) {
+                    alert("时间数值输入有误！请检查后重新输入");
+                    return;
+                }
+                
+                if (confirm('确认保存修改吗？')) {
+                    $("#taskSave").setAttribute("style", "display:none;");
+                    $("#taskComplete").setAttribute("style", "display:block;");
+                    var curItem = $(".childtask-clicked")[0];
+                    var id = curItem.id.split("-")[1];
+                    
+                    _List3Content[id].title = $("#childtask-title").value;
+                    _List3Content[id].time = $("#childtask-time").value;
+                    _List3Content[id].content = $("#content-body").innerHTML;
+                    $("#content-body").contentEditable = false;		
+                    $("#content-body-count").style.display = "none";
+                    var ID = curItem.id.split("-")[1];
+                    $("#content-header").innerHTML = _List3Content[ID].title;
+                    $("#content-date").innerHTML = _List3Content[ID].time;
+                    $("#content-body").innerHTML = _List3Content[ID].content;
+                    $("#task-header-all").click();
+                    localStorage.ID3_content = JSON.stringify(_List3Content);
+                }
+            }
+            
+            if(tagChild.parentNode.id == "taskComplete" && tagChild.parentNode.getAttribute("class").split(" ").length == 1 && $(".childtask-clicked").length){
+                if(confirm("确定任务完成？")){
+                    var curItem = $(".childtask-clicked")[0];
+                    var id = curItem.id.split("-")[1];
+                    _List3Content[id].status = "complete";
+                    localStorage.List3Content = JSON.stringify(_List3Content);
+                    addClass($("#taskComplete"), "complete");
+                }
             }
             
             //debug here...
             if (tagChild.nodeType == 1 && tagChild.parentNode.getAttribute("class") == "cata-delete") {
                 var ID1 = tagChild.parentNode.parentNode.id.split('-')[1];
                 var ID2 = tagChild.parentNode.parentNode.id.split('-')[2];
-                console.log(ID1);
                 if (ID1 == 1) {
                     alert("不能删除默认分类！");
                     return;
@@ -327,11 +450,43 @@ localStorage.clear();
                     localStorage.List2Title = JSON.stringify(_List2Title);
                 }
             }
-        });
+            
+            tagChild = null;
+        };
         
-        addEvent(pattern, "keyup", function(e) {
-            console.log(e.path[0].id);
-        });
+        pattern.onkeyup = function(e) {
+            var target = e.path[0];
+            if(target.id == "childtask-title"){
+                var str = target.value;
+                if (str.length <= 20) {
+                    $("#childtask-title-count").innerHTML = "还可输入" + (20 - str.length) + "个字";
+                }
+                else {
+                    $("#childtask-title").value = str.slice(0,19);
+                }
+            }
+            
+            if(target.id == "childtask-time") {
+                var str = target.value;
+                if (/^\d\d\d\d-\d\d-\d\d$/.test(str)) {
+                    $("#childtask-time").style.border = "2px solid green";
+                }
+                else {
+                    $("#childtask-time-alert").style.display = "block";
+                    $("#childtask-time").style.border = "2px solid red";
+                }
+            }
+            
+            if(target.id == "content-body"){
+                var str = target.value;
+                if (str.length <= 200) {
+                    $("#content-body-count").innerHTML = "还可输入" + (200 - str.length) + "个字";
+                }
+                else {
+                    $("#content-body").value = str.slice(0,199);
+                }
+            }
+        };
     }
     
     window.init = init;
