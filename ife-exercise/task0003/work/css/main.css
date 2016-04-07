@@ -234,7 +234,7 @@ body *{
 }
 
 #content-body {
-    width: 100px;
+    width: 100%;
     height: auto;
     box-sizing: border-box;
     padding: 20px;
