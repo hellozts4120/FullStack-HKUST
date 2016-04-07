@@ -433,21 +433,32 @@ localStorage.clear();
             if (tagChild.nodeType == 1 && tagChild.parentNode.getAttribute("class") == "cata-delete") {
                 var ID1 = tagChild.parentNode.parentNode.id.split('-')[1];
                 var ID2 = tagChild.parentNode.parentNode.id.split('-')[2];
-                if (ID1 == 1) {
-                    alert("不能删除默认分类！");
-                    return;
+                if (ID1 == 'item') {
+                    if (ID2 == 1) {
+                        alert("不能删除默认分类！");
+                        return;
+                    }
+                    if (confirm("确认删除此分类吗？")) {
+                        tagChild.parentNode.parentNode.style.display = "none";
+                        delete _ListRelation[ID2];
+                        delete _List1Title[ID2];
+                        localStorage.ListRelation = JSON.stringify(_ListRelation);
+                        localStorage.List2Title = JSON.stringify(_List1Title);
+                    }
 
                 }
-                if (ID2 == 1) {
-                    alert("不能删除默认子分类！");
-                    return;
-                }
-                if (confirm("确认删除此分类吗？")) {
-                    tagChild.parentNode.style.display = "none";
-                    delete _ListRelation[ID1]["task"][ID2];
-                    delete _List2Title[ID2];
-                    localStorage.ListRelation = JSON.stringify(_ListRelation);
-                    localStorage.List2Title = JSON.stringify(_List2Title);
+                else {
+                    if (ID1 == 1) {
+                        alert("不能删除默认子分类！");
+                        return;
+                    }
+                    if (confirm("确认删除此分类吗？")) {
+                        tagChild.parentNode.parentNode.style.display = "none";
+                        delete _ListRelation[ID1]["task"][ID2];
+                        delete _List2Title[ID2];
+                        localStorage.ListRelation = JSON.stringify(_ListRelation);
+                        localStorage.List2Title = JSON.stringify(_List2Title);
+                    }
                 }
             }
             
