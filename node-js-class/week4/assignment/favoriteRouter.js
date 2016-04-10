@@ -20,7 +20,44 @@ favoriteRouter.route('/')
 })
 
 .post(Verify.verifyOrdinaryUser, function (req, res, next) {
-    //TODO
+    var id = req.decoded._doc._id;
+    console.log(id);
+    Favorites.update(
+        {customer: id},
+        {$setOnInsert: {customer: id}},
+        {upsert: true},
+        function(err, res) {
+            console.log('upsert result:');
+            console.log(res);
+        }
+    );
+    
+    Favorites.findOne(
+        {customer: id},
+        function(err, favs) {           
+            if (err) throw err;
+            var dishId = req.body._id;
+            console.log("adding dish with dishId = " + dishId);
+            if (favs.favlist == undefined) {
+                favs.favlist = [dishId];
+            }
+            else {
+                if (favs.favlist.indexOf(dishId) == -1) {
+                    favs.favlist.push(dishId);
+                }
+                else {
+                    console.log("dish already in favlist");
+                }
+            }
+            console.log("favs:");
+            console.log(favs);
+            favs.save(function(err, favs) {
+                if (err) throw err;
+                console.log('Updated favs');
+                res.json(favs);
+            });
+        }
+    );
 })
 
 .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
