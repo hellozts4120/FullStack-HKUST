@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<h2>Please Enter Your Detail For Our Dating Website!</h2>
+		<form action="https://ihome.ust.hk/~rossiter/cgibin/show_everything.php" method="post" enctype="multipart/form-data">
+		  <fieldset>
+			<legend>Your Face</legend>
+			<label for="avatar">Your image:</label>
+			<input type="file" id="avatar" name="avatar" required>
+			<br>
+			<label for="preview">Image preview:</label>
+			<img id="preview" name="previewImg">
+			<br>
+		  </fieldset>
+
+		  <fieldset>
+		  	<legend>Your General Details</legend>
+		  	<label for="name">Name:</label>
+		  	<input type="text" name="name" placeholder="Your Full name" required> <br>
+		  	<label for="gender">Gender:</label>
+		  	<input type="radio" name="gender" required> Male <input type="radio"> Female <br>
+		  	<label for="age">Age:</label>
+		  	<input type="number" name="age" value=18 required> <br>
+		  	<label for="dateOfBirth">Date of Birth:</label>
+		  	<input type="date" name="dateOfBirth"> <br>
+		  	<label for="favorColor">Favourite Color:</label>
+		  	<input type="color" name="favorColor"> <br>
+		  	<label for="country">Which country:</label>
+		  	<select name="country">
+		  		<option>no selection</option>
+                <option>Australia</option>
+                <option>Canada</option>
+                <option>France</option>
+                <option>Spain</option>
+                <option>United States</option>
+            </select>
+		  </fieldset>
+
+		  <fieldset>
+		  	<legend>Your indications</legend>
+		  	<label for="height">Height:</label>
+              Short <input type="range" name="height" min="0" max="100" value="50"> Tall <br>
+              <label for="salary">Salary:</label>
+              Poor <input type="range" name="salary" min="0" max="100" value="50"> Rich <br>
+		  </fieldset>
+
+		  <fieldset>
+		  	<legend>Your Contact Information</legend>
+		  	<label for="mail">Email</label>
+			<input type="email" name="mail" required> <br>
+			<label for="mobile">Mobile</label>
+			<input type="tel" name="mobile"> <br>
+			<label for="address">Address</label>
+			<textarea name="address"></textarea> <br>
+			<label for="contact">Method to contact you</label>
+			<input type="checkbox" name="contact"> Email <input type="checkbox"> Whatsapp <input type="checkbox"> In-app chat <br>
+		  </fieldset>
+
+		  <input type="submit" value="Submit">
+		</form>
+	</body>
+</html>

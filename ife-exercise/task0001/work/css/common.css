@@ -1,0 +1,161 @@
+body{
+	background-color: #eeeeee;
+}
+
+.header {
+	width: 100%;
+	height: 80px;
+	background: #4B0082;
+}
+
+.header-icon {
+	float: right;
+	margin-right: 10px;
+	margin-top: 46px;
+}
+
+.header-content {
+	position: relative;
+	margin-left: 193px;
+	width: 980px;
+	height: 80px;
+	
+}
+
+.mylogo {
+	float: left;
+	font-size: 40px;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+.list {
+	position: absolute;
+	width: auto;
+	bottom: 5px;
+	margin-left: 700px;
+	
+}
+
+.list-context a, .list-context a:visited {
+	color: #FFFFFF;	
+	font-size: 14px;
+	font-family: "Microsoft YaHei";
+}
+
+.list-context ul {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+.list-context li, .footer li {
+	float: left;
+	margin-left: 28px;
+	list-style: none;
+}
+
+.list-context li a:hover{
+    font-weight: bold;
+}
+
+.footer {
+	padding-top: 10px;
+	background: #000000;
+	height: 394px;
+	color: #FFFFFF;
+	position: relative;
+	clear: both;
+}
+
+.footer a {
+	color: #FFFFFF;
+	text-decoration: none;
+	margin-right: 25px;
+}
+
+.footer a:hover{
+    text-decoration: underline;
+}
+
+.footer-header {
+	margin: 0 auto;
+	width: 100%;
+	border-bottom: 1px solid #333333;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+
+}
+
+.footer-content {
+	display: table;
+}
+
+.linker {
+	display: table-cell;
+}
+
+.linker h3 {
+	color: #FFFFFF;
+	margin-top: 40px;
+	margin-bottom: 30px;
+	margin-left: 120px;
+}
+
+.linker ul {
+	width: 100px;
+	text-align: center;
+	height: 100px;
+	margin-left: 120px;
+}
+
+.footer-content h3 {
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+}
+
+.banner {
+	position: relative;
+	width: 100%;
+	height: 525px;
+}
+
+.banner .my-img {
+	width: 100%;
+	height: 525px;
+}
+
+.copyright {
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+}
+
+@media only screen and (max-width: 980px) {
+    .header {
+        width: 980px;
+    }
+    
+    .header-icon {
+        display: none;
+    }
+    
+    .header-content {
+        width: 980px;
+        margin: 0 auto;
+    }
+    
+    .footer {
+        width: 980px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    
+    .banner {
+        width: 980px;
+    }
+}

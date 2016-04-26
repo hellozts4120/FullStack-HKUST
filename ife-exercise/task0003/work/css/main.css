@@ -1,0 +1,394 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body *{
+    transition: all 0.4s;
+}
+
+#header {
+    width: 100%;
+    height: auto;
+    background: #A9A9A9;
+    position: absolute;
+    color: #696969;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    z-index: 200;
+    font-family: "Microsoft YaHei";
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+#category {
+    width: 250px;
+    height: 100%;
+    background: #DCDCDC;
+    position: relative;
+    float: left;
+    z-index: 100;
+    border: 1px solid #A9A9A9;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.cata-item, #cata-all, #cata-all div {
+    position: relative;
+    width: 100%;
+    height: 40px;
+}
+
+.cata-item {
+    margin-bottom: 5px;
+}
+
+.cata-item, .cata-task{
+    cursor: pointer;
+}
+
+.cata-item, #cata-all, #cata-title{
+    font-size: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.cata-task{
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 0 30px;
+    margin-left: 10px;
+    position: relative;
+}
+
+.cata-task-clicked{
+    background: #ffffff;
+}
+
+#cata-all {
+    position: absolute;
+    padding-top: 85px;
+}
+
+#cata-title {
+    position: absolute;
+    top: 110px;
+}
+
+#cata-list{
+    height: 100%;
+    padding-bottom: 50px;
+    padding-top: 140px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.cata-delete {
+    width: auto;
+    float: right;
+    margin-top: 2px;
+    display: none;
+}
+
+.cata-task:hover .cata-delete , .cata-item:hover .cata-delete{
+	display: inline;
+}
+
+#cata-footer{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+    background: rgb(238,238,238);
+    border-top: 1px solid rgb(206,206,206);
+}
+
+.cata-tasklist{
+    width: 100%;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.cata-tasklist-clicked{
+    height: auto;
+}
+
+.cata-item-clicked{
+    background: #aaaaaa;
+}
+
+.childtask{
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding-top: 5px;
+    padding-left: 25px;
+}
+
+.childtask:hover{
+    color: green;
+}
+
+.childtask-clicked{
+	color: green;
+	background: #eeeeee;
+}
+
+.childtask-date{
+    background: rgb(243,243,216);
+    height: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 5px;
+}
+
+#task {
+    width: 203px;
+    height: 100%;
+    float: left;
+    position: relative;
+    z-index: 100;
+    border: 1px solid #A9A9A9;
+    background: #FFFFFF;    
+    box-sizing: border-box;
+}
+
+#task-header {
+    padding-top: 85px;
+    height: 40px;
+    width: inherit;
+    position: absolute;
+    background: #DCDCDC;
+    border-bottom: 1px solid #A9A9A9;
+}
+
+.task-header-button {
+    float: left;
+    width: 45px;
+    height: auto;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-family: "Microsoft YaHei";
+    font-size: 15px;
+}
+
+.task-header-clicked{
+    background: #aaaaaa;
+}
+
+#task-content {
+    height: 100%;
+    width: inherit;
+    padding-bottom: 50px;
+    padding-top: 123px;
+    box-sizing:border-box;
+    overflow: auto;
+    border: 1px solid #A9A9A9;
+}
+
+#task-footer {
+    width: inherit;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    border: 1px solid #A9A9A9;
+}
+
+#content {
+    box-sizing: border-box;
+    padding-top: 60px;
+    margin-left: 454px;
+    height: 100%;
+    position: relative;
+    z-index: 100;
+    border: 1px solid #A9A9A9;
+    background: #FFFFFF;    
+}
+
+#content-header {
+    width: 100%;
+    height: 70px;
+    box-sizing: border-box;
+    padding: 20px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #A9A9A9;
+    font-size: 20px;
+    font-family: "Microsoft YaHei";
+    font-weight: bold;
+    position: relative;
+}
+
+#content-date {
+    width: 100%;
+    height: 60px;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 15px;
+    font-family: "Microsoft YaHei";
+    border-bottom: 1px solid #A9A9A9;
+}
+
+#content-body {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 15px;    
+    font-family: "Microsoft YaHei";
+}
+
+.add-button {
+    width: 100px;
+    height: 24px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: "Microsoft YaHei";
+}
+
+.add-button p {
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#add-cata, #add-task {
+    width: 110px;
+    margin: 0;
+    float: left;
+    margin: 5px;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+#add-cata p {
+    margin-right: 10px;
+}
+
+#add-childtask {
+    margin: 15px;
+    margin-right: 110px;
+    margin-bottom: 0;
+}
+
+.add-button:hover {
+    background: #aaaaaa;
+}
+
+#prompt, #prompt2{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    background: rgba(0,0,0,0.5);
+    display: none;
+}
+#prompt-window, #prompt2-window{
+    margin-top: 300px !important;
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+    background: #eeeeee;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#prompt-header, #prompt2-header{
+    width: 100%;
+    height: 50px;
+    position: relative;
+    text-align: center;
+}
+#prompt-cancel, #prompt2-cancel, #prompt-yes, #prompt2-yes{
+    position: absolute;
+    top: 15px;
+    font-size: 20px;
+    font-family: "Microsoft YaHei";
+    cursor: pointer;
+    color: #079243;
+}
+#prompt-cancel:hover, #prompt-yes:hover, #prompt2-cancel:hover, #prompt2-yes:hover{
+    color: #39c878;
+}
+#prompt-cancel, #prompt2-cancel{
+    left: 20px;
+}
+#prompt-yes, #prompt2-yes{
+    right: 20px;
+}
+#prompt-title, #prompt2-title{
+    padding-top: 10px;
+    font-size: 25px;
+    font-family: "微软雅黑";
+}
+#prompt-body, #prompt2-body{
+    background: #cccccc;
+    height: 100%;
+}
+
+#prompt-body p, #prompt2-body p{
+    font-size: 15px;
+    padding-top: 30px;
+    padding-left: 10px;
+    color: #666666;
+}
+
+#prompt-input, #prompt2-input{
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    padding-left: 10px
+}
+
+#taskComplete, #taskSave{
+    position: absolute;
+    top: 80px;
+    right: 80px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 99;
+}
+
+#taskComplete:hover , #taskEdit:hover , #taskSave:hover{
+    color: #aaaaaa;
+}
+
+#taskEdit{
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 99;
+    display: block;
+}
+
+#content-body-count{
+    float: left;
+    margin: 20px;
+    color:#aaaaaa;
+}
+
+#childtask-title-count, #childtask-time-alert{
+    float: left;
+    margin-left: 20px;
+    font-size: 15px;
+    color: #aaaaaa;
+    margin-top: 5px;
+}
+
+.complete{
+    color: #abf26d;
+}
+
+/*  responsive design  */
+
+@media only screen and (max-width: 978px) {
+    html, body {
+        width: 978px;
+        height: 700px;
+    }
+}

@@ -1,0 +1,16 @@
+<ion-popover-view>
+    <ion-header-bar>
+        <h1 class="title">Options</h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closePopover()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <label class="item item-input" ng-click="addFavorite(dish.id) ">
+            <span class="input-label">Add to Favorites</span>
+        </label>
+        <label class="item item-input" ng-click="openCommentModal() ">
+            <span class="input-label">Add Comment</span>
+        </label>
+    </ion-content>
+</ion-popover-view>

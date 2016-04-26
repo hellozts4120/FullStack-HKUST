@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-ch">
+    <head>
+        <title>To-Do</title>
+        <meta charset="utf-8">
+		<meta http-equiv="Content-Type" charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
+        
+        <link rel="stylesheet" media="all" type="text/css" href="css/reset.css">
+        <link rel="stylesheet" media="all" type="text/css" href="css/main.css">
+    </head>
+
+    <body>
+        
+        <div id="header">&nbsp;&nbsp;&nbsp;&nbsp;GTD Tools</div>
+        
+        <div id="prompt">
+            <div id="prompt-window" class="category-input">
+                <div id="prompt-header">
+                    <p id="prompt-cancel">取消</p>
+                    <p id="prompt-title">新建分类</p>
+                    <p id="prompt-yes">完成</p>
+                </div>
+                <div id="prompt-body">
+                <p>分类名称</p>
+                    <input id="prompt-input">
+                </div>
+            </div>
+        </div>
+        <div id="prompt2">
+            <div id="prompt2-window" class="category-input">
+                <div id="prompt2-header">
+                    <p id="prompt2-cancel">取消</p>
+                    <p id="prompt2-title">新建子分类</p>
+                    <p id="prompt2-yes">完成</p>
+                </div>
+                <div id="prompt2-body">
+                    <p>分类名称</p>
+                    <input id="prompt2-input">
+                </div>
+            </div>
+        </div>
+        
+        <div id="category">
+            <!-- total><-->
+            <div id="cata-all">所有任务（）</div>
+            <div id="cata-title">分类列表</div>
+            <div id="cata-list"></div>
+            <div id="cata-footer">
+                <div id="add-cata" class="add-button"><img src="img/new.png"><p>新增分类</p></div>
+                <div id="add-task" class="add-button"><img src="img/new.png"><p>新增子分类</p></div>
+            </div>
+        </div>
+
+        <div id="task">
+            <div id="task-header">
+                <div class="task-header-button" id="task-header-all">所有</div>
+                <div class="task-header-button" id="task-header-undone">未完成</div>
+                <div class="task-header-button" id="task-header-done">已完成</div>
+            </div>    
+            
+            <div id="task-content"></div>
+            <div id="task-footer">
+                <div id="add-childtask" class="add-button"><img src="img/new.png"><p>新增任务</p></div>
+            </div>
+        </div>
+        
+        <div id="content">
+            <div id="taskSave"><img src="img/upload.png"></div>
+            <div id="taskComplete"><img src="img/confirm.png"></div>
+            <div id="taskEdit"><img src="img/edit.png"></div>
+            <div id="content-header"></div>
+            <div id="content-date"></div>
+            <div id="content-body"></div>
+            <div id="content-body-count" style="display:none">还可输入200字</div>
+        </div>
+        
+        <script type="text/javascript" src="js/util.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+    </body>    
+</html>    
