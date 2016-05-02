@@ -7,8 +7,8 @@ localStorage.clear();
     var pattern = document.getElementsByTagName("body")[0];
     var dateTemplate = "<div id=\"childtask-{{date}}\"><div class=\"childtask-date\">{{date}}</div></div>";
     var taskTemplate = "<div class=\"childtask\" id=\"{{ID3}}\">{{title}}</div>";
-    var template1 = "<div class=\"cata-item\" id=\"cata-item-{{id}}\"><img src=\"img/tasklist.png\">{{name}}<div class=\"cata-delete\"><img src=\"img/delete.png\"></div></div><div class=\"cata-tasklist\" id=\"cata-item-{{id}}-tasklist\"></div>";
-    var template2 = "<div class=\"cata-task\" id=\"task-{{parentID}}-{{taskID}}\"><img src=\"img/childtask.png\">{{content}}({{childtaskNum}})<div class=\"cata-delete\"><img src=\"img/delete.png\"></div></div>";
+    var template1 = "<div class=\"cata-item\" id=\"cata-item-{{id}}\"><i class='fa fa-folder-open' aria-hidden='true'></i>&nbsp;{{name}}<div class=\"cata-delete\"><i class='fa fa-times' aria-hidden='true'></div></div><div class=\"cata-tasklist\" id=\"cata-item-{{id}}-tasklist\"></div>";
+    var template2 = "<div class=\"cata-task\" id=\"task-{{parentID}}-{{taskID}}\"><i class='fa fa-file-o' aria-hidden='true'></i>&nbsp;{{content}}({{childtaskNum}})<div class=\"cata-delete\"><i class='fa fa-times' aria-hidden='true'></div></div>";
     
     //增加父级分类
     function addList1(name) {
@@ -525,7 +525,7 @@ localStorage.clear();
             }
             
             if(target.id == "content-body"){
-                var str = target.value;
+                var str = target.innerHTML;
                 if (str.length <= 200) {
                     $("#content-body-count").innerHTML = "还可输入" + (200 - str.length) + "个字";
                 }
