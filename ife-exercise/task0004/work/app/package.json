@@ -1,0 +1,15 @@
+{
+  "name": "todo-mobile",
+  "version": "1.0.0",
+  "description": "Mobile Version of IFE-2015 spring To-Do project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "todo",
+    "mobile"
+  ],
+  "author": "Tianshu Zhou",
+  "license": "MIT"
+}

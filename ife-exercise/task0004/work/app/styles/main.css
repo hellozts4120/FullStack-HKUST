@@ -1,0 +1,80 @@
+body {
+    font-family: "Microsoft Yahei"
+}
+
+body *{
+    transition: all 0.4s;
+}
+
+.nav {
+    background: #dddddd;
+    font-size: 40px;
+    text-align: center;
+    height: 50px;
+    width: 320px;
+    color: #ffffff;
+}
+
+.top-ret {
+    position: absolute;
+    top: 20px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+}
+
+#cata-container {
+    background: #2E64FE;
+}
+
+#task-container {
+    background: #04B404;
+}
+
+#content-container {
+    background: #FF8000;
+}
+
+#content-container div {
+    width: 100%;
+    height: 50px;
+    padding: 12px;
+    box-sizing:border-box;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#content-container .content-title {
+    font-size: 26px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+#content-container .content-date {
+    font-size: 14px;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+#content-container .content {
+    font-size: 18px;
+    margin: 20px auto;
+}
+
+.item {
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid #000000;
+    font-size: 26px;
+    padding: 12px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 5px auto;
+    
+}

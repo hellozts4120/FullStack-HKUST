@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" ng-app="todo-mobile">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>To-Do Mobile Version</title>
+
+    <link href="styles/reset.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div ui-view="header"></div>
+    <div ui-view="content"></div>
+
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers.js"></script>
+    <script src="scripts/services.js"></script>
+</body>
+
+</html>
