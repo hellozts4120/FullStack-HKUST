@@ -11,13 +11,21 @@ body *{
     font-size: 40px;
     text-align: center;
     height: 50px;
-    width: 320px;
+    width: 100%;
     color: #ffffff;
 }
 
 .top-ret {
     position: absolute;
     top: 20px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.top-new {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     text-decoration: none;
     color: #ffffff;
 }
@@ -29,6 +37,23 @@ body *{
     position: absolute;
 }
 
+.container input {
+    width: 50%;
+    height: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 25%;
+    text-align: center;
+}
+
+.container button {
+    width: 20%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 40%;
+}
+
+
 #cata-container {
     background: #2E64FE;
 }
@@ -37,7 +62,7 @@ body *{
     background: #04B404;
 }
 
-#content-container {
+#content-container, #edit-container, #edit-container-1 {
     background: #FF8000;
 }
 
