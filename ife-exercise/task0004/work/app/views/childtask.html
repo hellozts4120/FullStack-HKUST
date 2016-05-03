@@ -1,4 +1,5 @@
     <a ui-sref="app" class="top-ret">《&nbsp;返回</a>
+    <a ui-sref="app.new({id: catagory.id})" class="top-new">新建</a>
     
     <div class="container" id="task-container" ng-init="init()">
         <div class="item" ng-repeat="task in allTask" ui-sref="app.view({id: task.id})">

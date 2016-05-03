@@ -28,6 +28,21 @@ angular.module('todo-mobile')
                 return Cata[i];
             }
         }
+    };
+    
+    this.upload = function (obj) {
+        Cata.push(obj);
+        localStorage.setItem('category', JSON.stringify(Cata));
+    }
+    
+    this.uploadTask = function (father, child) {
+        for (var i = 0; i < Cata.length; i++) {
+            if (Cata[i]["id"] == father) {
+                Cata[i]['child'].push(child);
+                return;
+            }
+        }
+        localStorage.setItem('category', JSON.stringify(Cata));
     }
 })
 
@@ -57,15 +72,10 @@ angular.module('todo-mobile')
         return Task;
 
     };
-        
-    this.getIdFeedback = function (id) {
-        
-        for (var i = 0; i < Feedbacks.length; i++) {
-            if (Feedbacks[i]["_id"] == id) {
-                return Feedbacks[i];
-            }
-        }
-
-    };
+    
+    this.upload = function (obj) {
+        Task.push(obj);
+        localStorage.setItem('task', JSON.stringify(Task));
+    }
 
 })

@@ -40,6 +40,16 @@ angular.module('todo-mobile', ['ui.router'])
                     }
                 }
             })
+            
+            .state('app.new', {
+                url:'new/:id',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/new.html',
+                        controller  : 'CreateController'                  
+                    }
+                }
+            })
     
         $urlRouterProvider.otherwise('/');
     })

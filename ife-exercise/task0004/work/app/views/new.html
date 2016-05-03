@@ -1,0 +1,14 @@
+    
+    <div class="container" id="edit-container" ng-show="status == 'new'">
+        <input type="text" class="content-title" ng-model="content.title">
+        <button ng-click="upload()" ui-sref="app">提交</button>
+    </div>    
+    
+    <div class="container" id="edit-container-1" ng-show="status != 'new'">
+        <input type="text" class="content-title" ng-model="content.title">
+        <input type="text" class="content-date" ng-model="content.date">
+        <input type="text" class="content" ng-model="content.content">
+        <button ng-click="upload()" ui-sref="app">提交</button>
+    </div>
+    
+    
